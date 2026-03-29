@@ -60,6 +60,16 @@ sub from_bytes {
 
 (my $prog = $0) =~ s{.*/}{};
 
+if (@ARGV && $ARGV[0] =~ /^(-h|--help)$/) {
+    print STDERR "Usage: $prog <number>[unit] ...\n";
+    print STDERR "  $prog 1000000      show all SI and binary unit conversions\n";
+    print STDERR "  $prog 10GB         to bytes  (uppercase letter = binary, base-1024)\n";
+    print STDERR "  $prog 10gb         to bytes  (lowercase letter = SI, base-1000)\n";
+    print STDERR "  $prog 26GiB        to bytes  (iB/ib suffix = binary, base-1024)\n";
+    print STDERR "  echo 1073741824 | $prog\n";
+    exit 1;
+}
+
 if (!@ARGV && -t STDIN) {
     print STDERR "Usage: $prog <number>[unit] ...\n";
     print STDERR "  $prog 1000000      show all SI and binary unit conversions\n";
